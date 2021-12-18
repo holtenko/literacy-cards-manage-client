@@ -1,26 +1,45 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <q-layout view="hHh lpr fFf">
+    <q-header elevated>
+      <q-toolbar>
+        <q-btn flat round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
+        <q-toolbar-title>天天识字卡 管理后台</q-toolbar-title>
+      </q-toolbar>
+    </q-header>
+
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered :width="200">
+      <q-list>
+        <menu-item v-for="item in menus" :key="item.title" v-bind="item" />
+      </q-list>
+    </q-drawer>
+
+    <q-page-container>
+      <router-view />
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { ref } from 'vue'
+import MenuItem from './components/MenuItem.vue'
+import menus from './router/menus'
 
 export default {
-  name: 'App',
+  name: 'LayoutDefault',
+
   components: {
-    HelloWorld
+    MenuItem
+  },
+
+  setup() {
+    const leftDrawerOpen = ref(false)
+    return {
+      menus,
+      leftDrawerOpen: ref(false),
+      toggleLeftDrawer() {
+        leftDrawerOpen.value = !leftDrawerOpen.value
+      }
+    }
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
