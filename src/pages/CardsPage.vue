@@ -34,7 +34,7 @@
             color="primary"
             label="新增卡片"
             :disable="!currentCardSet.id"
-            @click="isAdd = true; newCard.cardSetId = currentCardSet.id"
+            @click="isAdd = true; newCard.cardSetId = currentCardSet.id; newCard.color = '#' + ('00000' + (Math.random() * 0x1000000 << 0).toString(16)).substr(-6)"
           />
         </template>
         <template v-slot:body="props">
@@ -71,6 +71,9 @@
                 :style="'width: 60px; background:' + props.row.color"
                 :label="props.row.color"
               />
+            </q-td>
+            <q-td key="status" :props="props" style="width: 80px">
+              <q-toggle :false-value="0" :true-value="1" color="green" v-model="props.row.status" />
             </q-td>
             <q-td key="color" :props="props" style="width: 120px">
               <q-btn
@@ -253,6 +256,11 @@ export default defineComponent({
           name: 'color',
           label: '背景颜色',
           field: 'color',
+          align: 'center',
+        }, {
+          name: 'status',
+          label: '状态',
+          field: 'status',
           align: 'center',
         }, {
           label: '操作',
