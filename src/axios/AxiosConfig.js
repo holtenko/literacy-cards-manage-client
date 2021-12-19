@@ -7,7 +7,7 @@ import qs from 'qs'
  */
 const axios = Axios.create({
   baseURL: "http://localhost:8080", // 请求基地址
-  timeout: 1000 // 超时时间
+  timeout: 10000 // 超时时间
 })
 
 // 请求拦截器
